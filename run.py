@@ -1,3 +1,5 @@
+from symbol_CLI import symbol_cli
+
 # wrapper
 
 # run symbol-CLI
@@ -6,6 +8,6 @@
     # outputs json, usable with hybrid-tradebot
 
 if __name__ == "main":
-    symbols = symbol_CLI()
+    symbols = symbol_cli()
     levels_dict = support_resistance_detector(symbols)
     parameter_writer(levels_dict)
