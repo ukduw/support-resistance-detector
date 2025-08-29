@@ -1,5 +1,23 @@
-# input list of symbols
-    # want to be able to copy-paste in format "TICKER, TICKER, TICKER..."
-# convert to list, return list
-# print list
-# offer option to re-enter if user error (y/n)
+
+def symbol_cli():
+    print("Input watchlist")
+
+    while True:
+        symbol_list = input(f"Enter symbol list, separated by commas: ").upper().split(", ")
+        print(f"({len(symbol_list)}) {symbol_list}")
+
+        while True:
+            cont = input("Is this correct? (y/n): ").stip().lower()
+            if cont == "n":
+                break
+            elif cont == "y":
+                break
+            else:
+                print(f"'{cont}' is not a valid input. Re-enter (y/n)")
+        
+        if cont == "y":
+            break
+    
+    return symbol_list
+
+
