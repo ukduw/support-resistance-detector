@@ -4,8 +4,7 @@ CONFIG_FILE = "configs.json" # placeholder - change to the config json in hybrid
 
 # dict:
     #{
-        #["AAPL": [100.0, 95.0], "TSLA": [234.0, 223.0], ...]
-        #...
+        #{"AAPL": [100.0, 95.0], "TSLA": [234.0, 223.0], ...},
         #"dollar_value": 4000.0
     #}
 
