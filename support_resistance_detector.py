@@ -1,6 +1,3 @@
-# takes list of symbols
-    # cli?
-
 # alpaca api call for 5(?) days of historical data
     # high, low, open, close, indicators (rsi, ...)
 # determine support/resistance levels - probably need to increase sensitivity for granular/weak levels
@@ -14,3 +11,15 @@
 # return dict (to use in parameter-writer)
 
 
+# symbols:
+    #{"symbol_list": ["AAPL", "TSLA", ...], "dollar_value": 4000.0}
+
+def support_resistance_detector(symbols):
+    return
+
+
+# desired output:
+    #{
+        #{"AAPL": [100.0, 95.0], "TSLA": [234.0, 223.0], ...},
+        #"dollar_value": 4000.0
+    #}
