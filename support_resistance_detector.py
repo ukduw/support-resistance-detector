@@ -6,6 +6,9 @@
     # levels closest to 5% of current price, within 10%
     # what is equidistant?
 # round to 4 significant figures
+# current price...? systemd run near aftermarket close?
+    # ideally, can input watchlist earlier, then run.py has timer that runs the rest when EDT hits x time
+    # wait, systemd doesn't make sense - run manually, cli input, then timer runs the rest near close
 
 # build dict of entry/exit parameters per symbol
 # return dict (to use in parameter-writer)
