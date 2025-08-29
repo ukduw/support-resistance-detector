@@ -1,6 +1,6 @@
 import json
 
-CONFIG_FILE = "configs.json" # placeholder - change to the config json in hybrid-tradebot later
+CONFIG_FILE = "configs.json" # placeholder - change to the config json in hybrid-tradebot after testing
 
 # dict:
     #{
@@ -23,8 +23,7 @@ def parameter_writer(dict):
     print(f"Total symbols saved: {len(configs)}")
 
 
-
-# desired format:
+# output format:
     #[
         #{
             #"symbol": "AAPL",
@@ -39,3 +38,5 @@ def parameter_writer(dict):
             #"dollar_value": 4000.0
         #},
     #]
+
+
