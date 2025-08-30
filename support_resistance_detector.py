@@ -1,14 +1,16 @@
-# alpaca api call for 5(?) days of historical data
+# alpaca api call for 5(? less? 6?) days of historical data
     # high, low, open, close, indicators (rsi, ...)
+
 # determine support/resistance levels - probably need to increase sensitivity for granular/weak levels
+    #
 
 # need logic to determine:
     # levels closest to 5% of current price, within 10%
-    # what is equidistant?
+    # just realized lower level should be 5-10% lower than the upper level used, not the intraday
+    # if excessively close to current price, default to next closest level
+    # if no upper in 5-10% range, default to <5 or >10?
+    # if no lower in 5-10% range, just default to intraday??
 # round to 4 significant figures
-# current price...? systemd run near aftermarket close?
-    # ideally, can input watchlist earlier, then run.py has timer that runs the rest when EDT hits x time
-    # wait, systemd doesn't make sense - run manually, cli input, then timer runs the rest near close
 
 # build dict of entry/exit parameters per symbol
 # return dict (to use in parameter-writer)
@@ -26,3 +28,5 @@ def support_resistance_detector(symbols):
         #{"AAPL": [100.0, 95.0], "TSLA": [234.0, 223.0], ...},
         #"dollar_value": 4000.0
     #}
+
+
