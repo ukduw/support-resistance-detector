@@ -8,12 +8,6 @@ eastern = pytz.timezone("US/Eastern")
 now = datetime.datetime.now(eastern)
 aftermarket_end_incoming = now.replace(hour=19, minute=45, second=0, microsecond=0) # 19:45 EDT / 00:45 BST
 
-# wrapper
-
-# run symbol-CLI
-# call support-resistance-detector with inputted list as argument
-# call parameter-writer with nearest appropriate levels dict as argument
-    # outputs json, usable with hybrid-tradebot
 
 if __name__ == "main":
     symbols = symbol_cli()
