@@ -1,6 +1,8 @@
 import json
 
 CONFIG_FILE = "configs.json" # placeholder - change to the config json in hybrid-tradebot after testing
+    # ../hybrid-tradebot-py/configs.json
+    # test, tweak support_resistance_detector parameters, write readme
 
 # dict:
     #{
