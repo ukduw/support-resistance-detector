@@ -9,6 +9,7 @@ now = datetime.datetime.now(eastern)
 aftermarket_end_incoming = now.replace(hour=19, minute=45, second=0, microsecond=0) # 19:45 EDT / 00:45 BST
 
 ld = LevelDetector()
+    # might change back... seems a lot more straightforward to call one function that does it all
 
 
 if __name__ == "main":
@@ -21,7 +22,7 @@ if __name__ == "main":
             ld.fetch_candlestick_data(symbols)
             ld.find_local_extrema()
             levels_dict = ld.closest_extrema()
-            
+
             parameter_writer(levels_dict)
         else: 
             time.sleep(300) # 5min
