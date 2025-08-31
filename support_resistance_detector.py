@@ -34,11 +34,26 @@
 # return dict (to use in parameter-writer)
 
 
+
 # symbols:
     #{"symbol_list": ["AAPL", "TSLA", ...], "dollar_value": 4000.0}
 
-def support_resistance_detector(symbols):
-    return
+class LevelDetector:
+    def __init__(self):
+        self.intraday_prices = {}
+        self.bar_data = {}
+        
+        self.local_extrema = {}
+        self.symbol_levels = {}
+
+    def fetch_candlestick_data(self, symbols):
+        return # request for s in symbols, append self.intraday_prices + self.bar_data
+    
+    def find_local_extrema(self, df, window=10):
+        return # take df, append self.local_extrema with extrema of each sliding window per symbol (remember to use a tolerance %)
+    
+    def closest_extrema(self):
+        return # logic to find closest appropriate levels (+ bound%) to intraday price per symbol, append self.symbol_levels with the below format
 
 
 # desired output:
