@@ -22,6 +22,7 @@ if __name__ == "main":
             ld.fetch_candlestick_data(symbols)
             ld.find_local_extrema()
             levels_dict = ld.closest_extrema()
+                # or, levels_dict = level_detector(symbols) - if changed back to one function...
 
             parameter_writer(levels_dict)
         else: 
