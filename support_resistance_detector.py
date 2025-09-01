@@ -1,5 +1,5 @@
 # alpaca api call for 5(? less? 6?) days of historical data
-    # high, low, open, close, indicators (rsi, ...)
+    # high, low, open, close, indicators (standard deviation...)
     # decide between 5min and 15min data
 
 # determine support/resistance levels - probably need to increase sensitivity for granular/weak levels
@@ -9,6 +9,9 @@
 # or, use average true range or standard deviation on top of these levels
 # not just single price point, but a small range
     # again, remember to account for upper and lower bound for risk %
+# after determining levels, sort, iterate through, removing those that are within another's stdev
+    # these represent the same level
+    # which one to get rid of? the one that's from being touched less recently?
 
 # gist:
     # pivot points (most common method):
@@ -33,7 +36,7 @@
 # round to 4 significant figures
 
 # build dict of entry/exit parameters per symbol
-# return dict (to use in parameter-writer)
+# return dict (to use in parameter_writer)
 
 
 
