@@ -39,26 +39,29 @@
 # return dict (to use in parameter_writer)
 
 
+intraday_prices = {}
+bar_data = {}
+local_extrema_sd = {}
+
+levels = {}
+    # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
+
 
 # symbols:
     #{"symbol_list": ["AAPL", "TSLA", ...], "dollar_value": 4000.0}
 
-class LevelDetector:
-    def __init__(self):
-        self.intraday_prices = {}
-        self.bar_data = {}
-        
-        self.local_extrema = {}
-        self.symbol_levels = {}
+async def level_detector(symbols):
+    # alpaca api request for s in symbols
+        # append intraday_prices, bar_data
+    
+    # take bar_data df, append local_extrema_sd with?:
+        # 1. local extrema of sliding window, 2. pivot points with strength score?, 3. reduce noise via fractals?, 4. calculate stdev
 
-    def fetch_candlestick_data(self, symbols):
-        return # request for s in symbols, append self.intraday_prices + self.bar_data
-    
-    def find_local_extrema(self, df, window=10):
-        return # take df, append self.local_extrema with extrema of each sliding window per symbol (remember to use a tolerance %)
-    
-    def closest_extrema(self):
-        return # logic to find closest appropriate levels (+ bound%) to intraday price per symbol, append self.symbol_levels with the below format
+    # logic to find closest appropriate levels per symbol
+        # append levels with upper level + stdev, lower level - stdev, rounded to 4sf
+        # ...with the below format
+
+    return levels
 
 
 # desired output:
