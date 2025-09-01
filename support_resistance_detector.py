@@ -6,6 +6,9 @@
 # levels should have x% bounds - i.e. candles shouldn't have to bounce off a price perfectly to contribute to a level's count
     # if so, using the upper and lower bound of 2 levels for entry/exit will increase risk %
     # level * bound% is the variable that needs to be evaluated with the below logic
+# or, use average true range or standard deviation on top of these levels
+# not just single price point, but a small range
+    # again, remember to account for upper and lower bound for risk %
 
 # gist:
     # pivot points (most common method):
