@@ -9,13 +9,9 @@
 
 # gist:
     # pivot points (most common method):
-        # based on previous levels (prev day high, low, close)
-        # pivot = (high + low + close) / 3
-            # R1 = 2 * pivot - low
-            # S1 = 2 * pivote - high
-            # R2 = pivot + (high - low)
-            # S2 = pivot - (high - low)
-            # ...
+        # count pivot candles at price points (+ bound%)
+        # can score levels by number of pivot candles
+        # pivot candle = higher/lower than previous/neighboring candles
     # local maxima/minima:
         # local extrema over a sliding window of candlesticks
         # in other words, price points where price previously reversed
