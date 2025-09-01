@@ -15,6 +15,9 @@
     # local maxima/minima:
         # local extrema over a sliding window of candlesticks
         # in other words, price points where price previously reversed
+# remove noise via fractals?
+    # essentially candle pattern: (green vs red) 1. ggg-rr, 2. rrr-gg
+    # 1. reversal on hitting resistance, 2. reversal on hitting support
 
 
 # need logic to determine:
