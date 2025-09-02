@@ -1,6 +1,6 @@
 # alpaca api call for 5(? less? 6?) days of historical data
     # high, low, open, close, indicators (standard deviation...)
-    # decide between 5min and 15min data
+    # 15min
 
 # determine support/resistance levels - probably need to increase sensitivity for granular/weak levels
 # levels should have x% bounds - i.e. candles shouldn't have to bounce off a price perfectly to contribute to a level's count
@@ -41,6 +41,7 @@
 
 intraday_prices = {}
 bar_data = {}
+standard_dev = {}
 local_extrema_sd = {}
 
 levels = {}
@@ -52,8 +53,19 @@ levels = {}
 
 async def level_detector(symbols):
     # alpaca api request for s in symbols
-        # append intraday_prices, bar_data
+        # 19:45 call, 11:45 + 16:00 (04:00-20:00, full day) * 5 = 91:45 (current day + last 5 days)
+            # is there a way to only request relevant days per ticker...?
+            # e.g. give option for days in CLI?
+        # 15min per bar, 367 bars for intra + 5d, * ~20 symbols = 7,340 (MAX 27 symbols, 9,909)
+            # single request limit = 10,000 bars
+            # 20 requests/min
+        # split requests into []s per days of historical data needed
+            # results in: 1) way under 10k per request, 2) total ~6 requests
     
+    # append intraday_prices, bar_data
+        # intraday = bar_data[-1]['close']?
+        # calculate stdev per symbol
+
     # take bar_data df, append local_extrema_sd with?:
         # 1. local extrema of sliding window, 2. pivot points with strength score?, 3. reduce noise via fractals?, 4. calculate stdev
 
