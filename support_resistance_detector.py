@@ -48,8 +48,15 @@ levels = {}
     # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
 
 
-# symbols:
-    #{"symbol_list": ["AAPL", "TSLA", ...], "dollar_value": 4000.0}
+# symbols:      (example: symbol_list3 skipped; empty day)
+    # {
+    # "symbol_list5": ["AAPL", "TSLA", ...], 
+    # "symbol_list4": ["ABC, BBBY, ..."],
+    # "symbol_list2": ["GME", "MEME"...],
+    # "symbol_list1": ["XYZ", ...],
+    # "symbol_list0": ["BABA", "GABA", "BAGA", "GAGA", ...],
+    # "dollar_value": 4000.0
+    # }
 
 async def level_detector(symbols):
     # alpaca api request for s in symbols
