@@ -61,6 +61,12 @@ async def level_detector(symbols):
             # 20 requests/min
         # split requests into []s per days of historical data needed
             # results in: 1) way under 10k per request, 2) total ~6 requests
+
+        # fetch 5, 4, 3, 2, 1, and 0 days back
+        # 0 days means intraday only
+        # all other ones means intraday + x days
+            # use this to calculate lookback minutes in support_resistance_detector
+            # e.g. 2 days = 11:45 (intra) + 16hr (full day) * 2 (day count) = 43.75hrs
     
     # append intraday_prices, bar_data
         # intraday = bar_data[-1]['close']?
