@@ -9,7 +9,6 @@ import os
 
 # ALPACA 15MIN TIMEFRAME BUG
     # REQUEST 5MIN BARS, WRITE AGGREGATOR...
-    # will 3x the number of bars requested - for intra + 5d, 1,101 bars per symbol (max 9 symbols)
 
 # determine support/resistance levels - probably need to increase sensitivity for granular/weak levels
 # levels should have x% bounds - i.e. candles shouldn't have to bounce off a price perfectly to contribute to a level's count
@@ -73,12 +72,15 @@ historical_client = StockHistoricalDataClient(api_key=API_KEY, secret_key=SECRET
     # "symbol_list0": ["BABA", "GABA", "BAGA", "GAGA", ...],
     # "dollar_value": 4000.0
     # }
+    
+# NOTE: 5min bars = 3x the bar requests - intra + 5d = 1,101 bars PER SYMBOL
+    # symbol_list5 MAX 9 SYMBOLS
 
 async def level_detector(symbols):
     for key in symbols:
         if key[-1].isdigit():
             lookback_days = int(key[-1])
-            lookback_minutes = 705 + lookback_days*960
+            lookback_minutes = 705 + lookback_days*960      # 705 - 4,800min
 
             now = datetime.datetime.now(eastern)
             start_time = now - datetime.timedelta(minutes=lookback_minutes)
@@ -94,21 +96,6 @@ async def level_detector(symbols):
 
 
 
-    # alpaca api request for s in symbols
-        # 19:45 call, 11:45 + 16:00 (04:00-20:00, full day) * 5 = 91:45 (current day + last 5 days)
-            # is there a way to only request relevant days per ticker...?
-            # e.g. give option for days in CLI?
-        # 15min per bar, 367 bars for intra + 5d, * ~20 symbols = 7,340 (MAX 27 symbols, 9,909)
-            # single request limit = 10,000 bars
-            # 20 requests/min
-        # split requests into []s per days of historical data needed
-            # results in: 1) way under 10k per request, 2) total ~6 requests
-
-        # fetch 5, 4, 3, 2, 1, and 0 days back
-        # 0 days means intraday only
-        # all other ones means intraday + x days
-            # use this to calculate lookback minutes in support_resistance_detector
-            # e.g. 2 days = 11:45 (intra) + 16hr (full day) * 2 (day count) = 43.75hrs
     
     # append intraday_prices, bar_data
         # intraday = bar_data[-1]['close']?
