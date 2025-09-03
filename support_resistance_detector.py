@@ -50,13 +50,14 @@ load_dotenv()
 API_KEY = os.getenv("API_KEY")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-intraday_prices = {}
 bar_data = {}
+intraday_prices = {}
 standard_dev = {}
 local_extrema_sd = {}
 
 levels = {}
     # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
+
 
 eastern = pytz.timezone("US/Eastern")
 
@@ -72,7 +73,7 @@ historical_client = StockHistoricalDataClient(api_key=API_KEY, secret_key=SECRET
     # "symbol_list0": ["BABA", "GABA", "BAGA", "GAGA", ...],
     # "dollar_value": 4000.0
     # }
-    
+
 # NOTE: 5min bars = 3x the bar requests - intra + 5d = 1,101 bars PER SYMBOL
     # symbol_list5 MAX 9 SYMBOLS
 
@@ -94,9 +95,19 @@ async def level_detector(symbols):
                 feed="sip"
             )
 
+            bars = historical_client.get_stock_bars(request_params).df
+            for symbol in bars.index.levels[0]:
+                df = bars.xs(symbol, level=0).sort_index()
+                bar_data[symbol].append(df)
+                intraday_prices[symbol].append(df["close"].iloc[-1])
+            
 
 
-    
+        else:
+            dollar_value = symbols[key]
+
+
+
     # append intraday_prices, bar_data
         # intraday = bar_data[-1]['close']?
         # calculate stdev per symbol
