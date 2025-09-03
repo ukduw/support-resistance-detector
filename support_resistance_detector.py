@@ -3,6 +3,7 @@ from alpaca.data.requests import StockBarRequest
 from alpaca.data.timeframe import TimeFrame
 
 import pytz, datetime
+import pandas as pd
 
 from dotenv import load_dotenv
 import os
@@ -116,7 +117,7 @@ async def level_detector(symbols):
                 "volume": sum(bar.volume for bar in three_bar_window)
             }
 
-            bar_data_15min[symbol].append(aggregated)
+            bar_data_15min[symbol].append(aggregated) # convert to df when needed
 
 
     # aggregate 5min to 15min bars
