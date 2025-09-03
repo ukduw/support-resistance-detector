@@ -1,6 +1,6 @@
-# alpaca api call for 5(? less? 6?) days of historical data
-    # high, low, open, close, indicators (standard deviation...)
-    # 15min
+# ALPACA 15MIN TIMEFRAME BUG
+    # REQUEST 5MIN BARS, WRITE AGGREGATOR...
+    # will 3x the number of bars requested - for intra + 5d, 1,101 bars per symbol (max 9 symbols)
 
 # determine support/resistance levels - probably need to increase sensitivity for granular/weak levels
 # levels should have x% bounds - i.e. candles shouldn't have to bounce off a price perfectly to contribute to a level's count
