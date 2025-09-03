@@ -7,8 +7,6 @@ import pytz, datetime
 from dotenv import load_dotenv
 import os
 
-# ALPACA 15MIN TIMEFRAME BUG
-    # REQUEST 5MIN BARS, WRITE AGGREGATOR...
 
 # determine support/resistance levels - probably need to increase sensitivity for granular/weak levels
 # levels should have x% bounds - i.e. candles shouldn't have to bounce off a price perfectly to contribute to a level's count
@@ -20,7 +18,7 @@ import os
 # after determining levels, sort, iterate through, removing those that are within another's stdev
     # these represent the same level
     # which one to get rid of? the one that's from being touched less recently?
-
+    
 # gist:
     # pivot points (most common method):
         # count pivot candles at price points (+ bound%)
@@ -100,16 +98,12 @@ async def level_detector(symbols):
                 df = bars.xs(symbol, level=0).sort_index()
                 bar_data[symbol].append(df)
                 intraday_prices[symbol].append(df["close"].iloc[-1])
-            
-
 
         else:
             dollar_value = symbols[key]
 
 
-
-    # append intraday_prices, bar_data
-        # intraday = bar_data[-1]['close']?
+    # aggregate 5min to 15min bars
         # calculate stdev per symbol
 
     # take bar_data df, append local_extrema_sd with?:
