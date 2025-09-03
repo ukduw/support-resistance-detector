@@ -18,7 +18,7 @@ import os
 # after determining levels, sort, iterate through, removing those that are within another's stdev
     # these represent the same level
     # which one to get rid of? the one that's from being touched less recently?
-    
+
 # gist:
     # pivot points (most common method):
         # count pivot candles at price points (+ bound%)
@@ -50,6 +50,8 @@ SECRET_KEY = os.getenv("SECRET_KEY")
 
 bar_data = {}
 intraday_prices = {}
+
+bar_data_15min = {}
 standard_dev = {}
 local_extrema_sd = {}
 
@@ -102,12 +104,29 @@ async def level_detector(symbols):
         else:
             dollar_value = symbols[key]
 
+    for symbol in bar_data:
+        for i in range(0, len(bar_data), 3):
+            three_bar_window = bar_data[symbol][i:i+3]
+
+            aggregated = {
+                "open": three_bar_window[0].open,
+                "high": max(bar.high for bar in three_bar_window),
+                "low": min(bar.low for bar in three_bar_window),
+                "close": three_bar_window[-1].close,
+                "volume": sum(bar.volume for bar in three_bar_window)
+            }
+
+            bar_data_15min[symbol].append(aggregated)
+
 
     # aggregate 5min to 15min bars
         # calculate stdev per symbol
 
     # take bar_data df, append local_extrema_sd with?:
-        # 1. local extrema of sliding window, 2. pivot points with strength score?, 3. reduce noise via fractals?, 4. calculate stdev
+        # 1. local extrema of sliding window
+        # 2. pivot points with strength score?
+        # 3. reduce noise via fractals?
+        # 4. calculate stdev
 
     # logic to find closest appropriate levels per symbol
         # append levels with upper level + stdev, lower level - stdev, rounded to 4sf
