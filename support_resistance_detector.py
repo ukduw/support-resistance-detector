@@ -1,3 +1,12 @@
+from alpaca.data.historical.stock import StockHistoricalDataClient
+from alpaca.data.requests import StockBarRequest
+from alpaca.data.timeframe import TimeFrame
+
+import pytz, datetime
+
+from dotenv import load_dotenv
+import os
+
 # ALPACA 15MIN TIMEFRAME BUG
     # REQUEST 5MIN BARS, WRITE AGGREGATOR...
     # will 3x the number of bars requested - for intra + 5d, 1,101 bars per symbol (max 9 symbols)
@@ -38,6 +47,9 @@
 # build dict of entry/exit parameters per symbol
 # return dict (to use in parameter_writer)
 
+load_dotenv()
+API_KEY = os.getenv("API_KEY")
+SECRET_KEY = os.getenv("SECRET_KEY")
 
 intraday_prices = {}
 bar_data = {}
@@ -46,6 +58,11 @@ local_extrema_sd = {}
 
 levels = {}
     # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
+
+eastern = pytz.timezone("US/Eastern")
+now = datetime.datetime.now(eastern)
+
+historical_client = StockHistoricalDataClient(api_key=API_KEY, secret_key=SECRET_KEY)
 
 
 # symbols:      (example: symbol_list3 skipped; empty day)
@@ -59,6 +76,8 @@ levels = {}
     # }
 
 async def level_detector(symbols):
+    lookback_days = None
+    lookback_minutes = 705 + lookback_days*960
     # alpaca api request for s in symbols
         # 19:45 call, 11:45 + 16:00 (04:00-20:00, full day) * 5 = 91:45 (current day + last 5 days)
             # is there a way to only request relevant days per ticker...?
