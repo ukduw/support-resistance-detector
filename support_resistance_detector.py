@@ -6,6 +6,8 @@ import pytz, datetime
 import pandas as pd
 import numpy as np
 
+from decimal import Decimal, ROUND_UP, ROUND_DOWN
+
 from dotenv import load_dotenv
 import os
 
@@ -29,6 +31,7 @@ closest_levels_up = {}
 closest_levels_down = {}
 
 levels = {}
+output = {}
     # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
 
 
@@ -134,15 +137,20 @@ def level_detector(symbols):
                 if -9.9 <= percent_diff2 <= -5:
                     closest_levels_down[symbol].append(level - standard_dev[symbol])
 
-
-
+    for symbol in closest_levels_up:
+        upper = min(closest_levels_up[symbol], intraday_prices[symbol]*1.05)
+        upper_rounded = float(Decimal(str(upper)).quantize(Decimal("0.01"), rounding=ROUND_UP)) if upper >= 1.00 else float(Decimal(str(upper)).quantize(Decimal("0.0001"), rounding=ROUND_UP))
+    for symbol in closest_levels_down:
+        lower = max(closest_levels_down[symbol], upper_rounded*0.95)
+        lower_rounded = float(Decimal(str(lower)).quantize(Decimal("0.01"), rounding=ROUND_DOWN)) if lower >= 1.00 else float(Decimal(str(lower)).quantize(Decimal("0.0001"), rounding=ROUND_DOWN))
+        levels[symbol] = [upper_rounded + standard_dev[symbol], lower_rounded - standard_dev[symbol]]
 
     # build dict of entry/exit parameters per symbol, with below format
 
-
-    levels["dollar_value"] = dollar_value
+    output.append(levels)
+    output["dollar_value"] = dollar_value
     
-    return levels
+    return output
 
 
 # desired output:
