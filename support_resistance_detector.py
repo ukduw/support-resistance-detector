@@ -118,24 +118,21 @@ def level_detector(symbols):
     # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
 
 
-    # need logic to determine:
-        # levels closest to 5% of current price, within 10%
-            # what if equidistant to 5%? e.g. 3 vs 7, 1 vs 9
-        # just realized lower level should be 5-10% lower than the upper level used, not the intraday
-        # if excessively close to current price, default to next closest level
-        # if no upper in 5-10% range, default to <5 or >10?
-        # if no lower in 5-10% range, just default to intraday??
-    # round to 4 significant figures
+    # local_extrema format:
+        #{
+        # "symbol1": {"level1": strength (int), "level2": strength, ...},
+        # "symbol2": {...}
+        #}
     for symbol in local_extrema:
-        for level in symbol:
-            if level > intraday_prices[symbol] and level.strength > 1:
-                percent_diff = (level + standard_dev[symbol] - intraday_prices[symbol]) / level * 100
+        for level in local_extrema[symbol]:
+            if float(level) > intraday_prices[symbol] and symbol[level] > 1:
+                percent_diff = (float(level) + standard_dev[symbol] - intraday_prices[symbol]) / float(level) * 100
                 if 5 <= percent_diff <= 9.9:
-                    closest_levels_up[symbol].append(level + standard_dev[symbol])
-            if level < intraday_prices[symbol] and level.strength > 1:
-                percent_diff2 = (level - standard_dev[symbol] - intraday_prices[symbol]) / level * 100
+                    closest_levels_up[symbol].append(float(level) + standard_dev[symbol])
+            if float(level) < intraday_prices[symbol] and symbol[level] > 1:
+                percent_diff2 = (float(level) - standard_dev[symbol] - intraday_prices[symbol]) / float(level) * 100
                 if -9.9 <= percent_diff2 <= -5:
-                    closest_levels_down[symbol].append(level - standard_dev[symbol])
+                    closest_levels_down[symbol].append(float(level) - standard_dev[symbol])
 
     for symbol in closest_levels_up:
         upper = min(closest_levels_up[symbol], intraday_prices[symbol]*1.05) + standard_dev[symbol]
