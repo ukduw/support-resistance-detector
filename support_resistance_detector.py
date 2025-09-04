@@ -23,7 +23,10 @@ intraday_prices = {}
 
 bar_data_15min = {}
 standard_dev = {}
-local_extrema_sd = {}
+local_extrema = {}
+
+closest_levels_up = {}
+closest_levels_down = {}
 
 levels = {}
     # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
@@ -109,6 +112,7 @@ def level_detector(symbols):
         # 3. reduce noise via fractals?
             # essentially candle pattern: (green vs red) 1. ggg-rr, 2. rrr-gg
             # 1. reversal on hitting resistance, 2. reversal on hitting support
+    # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
 
 
     # need logic to determine:
@@ -119,6 +123,18 @@ def level_detector(symbols):
         # if no upper in 5-10% range, default to <5 or >10?
         # if no lower in 5-10% range, just default to intraday??
     # round to 4 significant figures
+    for symbol in local_extrema:
+        for level in symbol:
+            if level > intraday_prices[symbol] and level.strength > 1:
+                percent_diff = (level + standard_dev[symbol] - intraday_prices[symbol]) / level * 100
+                if 5 <= percent_diff <= 9.9:
+                    closest_levels_up[symbol].append(level + standard_dev[symbol])
+            if level < intraday_prices[symbol] and level.strength > 1:
+                percent_diff2 = (level - standard_dev[symbol] - intraday_prices[symbol]) / level * 100
+                if -9.9 <= percent_diff2 <= -5:
+                    closest_levels_down[symbol].append(level - standard_dev[symbol])
+
+
 
 
     # build dict of entry/exit parameters per symbol, with below format
