@@ -118,6 +118,8 @@ def level_detector(symbols):
     # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
 
 
+    print("// stdev //", standard_dev) # REMOVE LATER
+    print("// all levels //", local_extrema) # REMOVE LATER
 
     # local_extrema format:
         #{
@@ -135,6 +137,9 @@ def level_detector(symbols):
                 if -9.9 <= percent_diff2 <= -5:
                     closest_levels_down[symbol].append(float(level) - standard_dev[symbol])
 
+    print("// filtered uppers //", closest_levels_up) # REMOVE LATER
+    print("// filtered lowers //", closest_levels_down) # REMOVE LATER
+
     for symbol in closest_levels_up:
         upper = min(closest_levels_up[symbol], intraday_prices[symbol]*1.05) + standard_dev[symbol]
         upper_rounded = float(Decimal(str(upper)).quantize(Decimal("0.01"), rounding=ROUND_UP)) if upper >= 1.00 else float(Decimal(str(upper)).quantize(Decimal("0.0001"), rounding=ROUND_UP))
@@ -143,12 +148,16 @@ def level_detector(symbols):
         lower_rounded = float(Decimal(str(lower)).quantize(Decimal("0.01"), rounding=ROUND_DOWN)) if lower >= 1.00 else float(Decimal(str(lower)).quantize(Decimal("0.0001"), rounding=ROUND_DOWN))
         levels[symbol] = [upper_rounded, lower_rounded]
 
+    print("// levels //", levels) # REMOVE LATER
+
     for symbol in levels:
         if len(levels[symbol]) < 2:
             levels.pop(symbol)
 
     output.append(levels)
     output["dollar_value"] = dollar_value
+
+    print("// final output //", output) # REMOVE LATER
     
     return output
 
