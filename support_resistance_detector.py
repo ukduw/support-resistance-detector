@@ -1,5 +1,5 @@
 from alpaca.data.historical.stock import StockHistoricalDataClient
-from alpaca.data.requests import StockBarRequest
+from alpaca.data.requests import StockBarsRequest
 from alpaca.data.timeframe import TimeFrame
 
 import pytz, datetime
@@ -57,7 +57,7 @@ def level_detector(symbols):
             now = datetime.datetime.now(eastern)
             start_time = now - datetime.timedelta(minutes=lookback_minutes)
 
-            request_params = StockBarRequest(
+            request_params = StockBarsRequest(
                 symbol_or_symbols=symbols[key],     # this ALWAYS returns multi-index df, even if list only contains 1 symbol
                 timeframe=TimeFrame(5, TimeFrame.Minute),
                 start=start_time,
@@ -116,6 +116,7 @@ def level_detector(symbols):
             # essentially candle pattern: (green vs red) 1. ggg-rr, 2. rrr-gg
             # 1. reversal on hitting resistance, 2. reversal on hitting support
     # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
+
 
 
     # local_extrema format:
