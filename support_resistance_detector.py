@@ -42,7 +42,7 @@ levels = {}
 # NOTE: 5min bars = 3x the bar requests - intra + 5d = 1,101 bars PER SYMBOL
     # symbol_list5 MAX 9 SYMBOLS
 
-async def level_detector(symbols):
+def level_detector(symbols):
     for key in symbols:
         if key[-1].isdigit():
             lookback_days = int(key[-1])
