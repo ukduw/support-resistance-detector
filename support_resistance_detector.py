@@ -145,7 +145,9 @@ def level_detector(symbols):
         lower_rounded = float(Decimal(str(lower)).quantize(Decimal("0.01"), rounding=ROUND_DOWN)) if lower >= 1.00 else float(Decimal(str(lower)).quantize(Decimal("0.0001"), rounding=ROUND_DOWN))
         levels[symbol] = [upper_rounded, lower_rounded]
 
-    # build dict of entry/exit parameters per symbol, with below format
+    for symbol in levels:
+        if len(levels[symbol]) < 2:
+            levels.pop(symbol)
 
     output.append(levels)
     output["dollar_value"] = dollar_value
