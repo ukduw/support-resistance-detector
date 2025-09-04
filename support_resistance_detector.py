@@ -92,6 +92,8 @@ def level_detector(symbols):
 
 
     # calculate stdev per symbol
+    # stdev of highs and lows?
+
     # levels should have stdev bounds - i.e. candles shouldn't have to bounce off a price perfectly to contribute to a level's count
     # if so, using the upper and lower bound of 2 levels for entry/exit will increase risk %
         # remember to account for upper and lower bound for risk %
@@ -117,7 +119,6 @@ def level_detector(symbols):
             # 1. reversal on hitting resistance, 2. reversal on hitting support
     # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
 
-
     print("// stdev //", standard_dev) # REMOVE LATER
     print("// all levels //", local_extrema) # REMOVE LATER
 
@@ -126,6 +127,7 @@ def level_detector(symbols):
         # "symbol1": {"level1": strength (int), "level2": strength, ...},
         # "symbol2": {...}
         #}
+
     for symbol in local_extrema:
         for level in local_extrema[symbol]:
             if float(level) > intraday_prices[symbol] and symbol[level] > 1:
@@ -143,10 +145,11 @@ def level_detector(symbols):
     for symbol in closest_levels_up:
         upper = min(closest_levels_up[symbol], intraday_prices[symbol]*1.05) + standard_dev[symbol]
         upper_rounded = float(Decimal(str(upper)).quantize(Decimal("0.01"), rounding=ROUND_UP)) if upper >= 1.00 else float(Decimal(str(upper)).quantize(Decimal("0.0001"), rounding=ROUND_UP))
+        levels[symbol] = [upper_rounded]
     for symbol in closest_levels_down:
         lower = max(closest_levels_down[symbol], upper_rounded*0.95) - standard_dev[symbol]
         lower_rounded = float(Decimal(str(lower)).quantize(Decimal("0.01"), rounding=ROUND_DOWN)) if lower >= 1.00 else float(Decimal(str(lower)).quantize(Decimal("0.0001"), rounding=ROUND_DOWN))
-        levels[symbol] = [upper_rounded, lower_rounded]
+        levels[symbol].append(lower_rounded)
 
     print("// levels //", levels) # REMOVE LATER
 
