@@ -4,6 +4,7 @@ from alpaca.data.timeframe import TimeFrame
 
 import pytz, datetime
 import pandas as pd
+import numpy as np
 
 from dotenv import load_dotenv
 import os
@@ -120,9 +121,10 @@ async def level_detector(symbols):
             bar_data_15min[symbol].append(aggregated) # convert to df when needed
 
 
-    # aggregate 5min to 15min bars
-        # calculate stdev per symbol
 
+    # calculate stdev per symbol
+
+    # price zones using below +- 1 stdev (daily, per bar...?)
     # take bar_data df, append local_extrema_sd with?:
         # 1. local extrema of sliding window
         # 2. pivot points with strength score?
@@ -133,6 +135,8 @@ async def level_detector(symbols):
         # append levels with upper level + stdev, lower level - stdev, rounded to 4sf
         # ...with the below format
 
+    levels["dollar_value"] = dollar_value
+    
     return levels
 
 
