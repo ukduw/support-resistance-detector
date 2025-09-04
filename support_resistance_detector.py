@@ -138,12 +138,12 @@ def level_detector(symbols):
                     closest_levels_down[symbol].append(level - standard_dev[symbol])
 
     for symbol in closest_levels_up:
-        upper = min(closest_levels_up[symbol], intraday_prices[symbol]*1.05)
+        upper = min(closest_levels_up[symbol], intraday_prices[symbol]*1.05) + standard_dev[symbol]
         upper_rounded = float(Decimal(str(upper)).quantize(Decimal("0.01"), rounding=ROUND_UP)) if upper >= 1.00 else float(Decimal(str(upper)).quantize(Decimal("0.0001"), rounding=ROUND_UP))
     for symbol in closest_levels_down:
-        lower = max(closest_levels_down[symbol], upper_rounded*0.95)
+        lower = max(closest_levels_down[symbol], upper_rounded*0.95) - standard_dev[symbol]
         lower_rounded = float(Decimal(str(lower)).quantize(Decimal("0.01"), rounding=ROUND_DOWN)) if lower >= 1.00 else float(Decimal(str(lower)).quantize(Decimal("0.0001"), rounding=ROUND_DOWN))
-        levels[symbol] = [upper_rounded + standard_dev[symbol], lower_rounded - standard_dev[symbol]]
+        levels[symbol] = [upper_rounded, lower_rounded]
 
     # build dict of entry/exit parameters per symbol, with below format
 
