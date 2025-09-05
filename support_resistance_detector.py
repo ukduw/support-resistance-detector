@@ -157,7 +157,7 @@ def level_detector(symbols):
         for level in local_extrema[symbol]:
             if float(level) > intraday_prices[symbol] and symbol[level] > 1:
                 percent_diff = (float(level) + standard_dev[symbol][0] - intraday_prices[symbol]) / float(level) * 100
-                if 5 <= percent_diff < 11:
+                if 3 <= percent_diff < 11:
                     closest_levels_up[symbol].append(float(level) + standard_dev[symbol][0])
             if float(level) < intraday_prices[symbol] and symbol[level] > 1:
                 percent_diff2 = (float(level) - standard_dev[symbol][1] - intraday_prices[symbol]) / float(level) * 100
