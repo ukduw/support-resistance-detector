@@ -49,6 +49,7 @@ output = {}
     # symbol_list5 MAX 9 SYMBOLS
 
 def level_detector(symbols):
+    # ===== REQUEST PER LOOKBACKDAY ===== #
     for key in symbols:
         if key[-1].isdigit():
             lookback_days = int(key[-1])
@@ -75,6 +76,8 @@ def level_detector(symbols):
         else:
             dollar_value = symbols[key]
 
+
+    # ===== 15MIN BAR AGGREGATOR ===== #
     for symbol in bar_data:
         for i in range(0, len(bar_data), 3):
             three_bar_window = bar_data[symbol][i:i+3]
@@ -92,6 +95,7 @@ def level_detector(symbols):
     # CONSIDER COMMENTING OUT
 
 
+    # ===== HIGH/LOW STDEV ===== #
     highs = {}
     lows = {}
     for symbol in bar_data_15min:
@@ -104,6 +108,7 @@ def level_detector(symbols):
     # numpy stdev uses n degrees of freedom rather than n-1; switched to statistics.stdev()
 
 
+    # ===== SUPPORT/RESISTANCE DETECTION ===== #
     # price zones using below +- 1 stdev (daily, per bar...?)
     # take bar_data df, append local_extrema_sd with?:
         # 1. local extrema of sliding window
@@ -119,6 +124,7 @@ def level_detector(symbols):
     # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
 
 
+    # ===== LEVEL CLEANUP ===== #
     # levels should have stdev bounds - i.e. candles shouldn't have to bounce off a price perfectly to contribute to a level's count
     # if so, using the upper and lower bound of 2 levels for entry/exit will increase risk %
         # remember to account for upper and lower bound for risk %
@@ -130,6 +136,7 @@ def level_detector(symbols):
         # add removed level's score to the one that replaces it
 
 
+    # ===== CLOSEST APPROPRIATE LEVELS + STDEV ===== #
     print("// stdev //", standard_dev) # REMOVE LATER
     print("// all levels //", local_extrema) # REMOVE LATER
 
