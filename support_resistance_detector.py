@@ -4,7 +4,7 @@ from alpaca.data.timeframe import TimeFrame
 
 import pytz, datetime
 import pandas as pd
-import numpy as np
+import statistics
 
 from decimal import Decimal, ROUND_UP, ROUND_DOWN
 
@@ -88,21 +88,20 @@ def level_detector(symbols):
             }
 
             bar_data_15min[symbol].append(aggregated) # convert to df when needed
+    # is an aggregator needed? more sensitive 5min-based levels may be better
+    # CONSIDER COMMENTING OUT
 
 
+    highs = {}
+    lows = {}
+    for symbol in bar_data_15min:
+        highs.append(bar_data_15min[symbol].high)
+        lows.append(bar_data_15min[symbol].low)
 
-    # calculate stdev per symbol
-    # stdev of highs and lows?
-
-    # levels should have stdev bounds - i.e. candles shouldn't have to bounce off a price perfectly to contribute to a level's count
-    # if so, using the upper and lower bound of 2 levels for entry/exit will increase risk %
-        # remember to account for upper and lower bound for risk %
-    # level +- stdev is the variable that needs to be evaluated with the below logic
-        # not just single price point, but a small range
-        # after determining levels, sort, iterate through, removing those that are within another's stdev
-    # these represent the same level
-    # which one to get rid of? the one that's been touched less recently? or less total touches?
-        # add removed level's score to the one that replaces it
+        highs_stdev = statistics.stdev(highs[symbol])
+        lows_stdev = statistics.stdev(lows[symbol])
+        standard_dev[symbol] = [highs_stdev, lows_stdev]
+    # numpy stdev uses n degrees of freedom rather than n-1; switched to statistics.stdev()
 
 
     # price zones using below +- 1 stdev (daily, per bar...?)
@@ -119,8 +118,27 @@ def level_detector(symbols):
             # 1. reversal on hitting resistance, 2. reversal on hitting support
     # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
 
+
+    # levels should have stdev bounds - i.e. candles shouldn't have to bounce off a price perfectly to contribute to a level's count
+    # if so, using the upper and lower bound of 2 levels for entry/exit will increase risk %
+        # remember to account for upper and lower bound for risk %
+    # level +- stdev is the variable that needs to be evaluated with the below logic
+        # not just single price point, but a small range
+        # after determining levels, sort, iterate through, removing those that are within another's stdev
+    # these represent the same level
+    # which one to get rid of? the one that's been touched less recently? or less total touches?
+        # add removed level's score to the one that replaces it
+
+
     print("// stdev //", standard_dev) # REMOVE LATER
     print("// all levels //", local_extrema) # REMOVE LATER
+
+    # standard_dev format:
+        #{
+        # "symbol1": [highs_stdev, lows_stdev],
+        # "symbol2": [highs_stdev, lows_stdev],
+        # ...
+        #}
 
     # local_extrema format:
         #{
@@ -131,23 +149,24 @@ def level_detector(symbols):
     for symbol in local_extrema:
         for level in local_extrema[symbol]:
             if float(level) > intraday_prices[symbol] and symbol[level] > 1:
-                percent_diff = (float(level) + standard_dev[symbol] - intraday_prices[symbol]) / float(level) * 100
+                percent_diff = (float(level) + standard_dev[symbol][0] - intraday_prices[symbol]) / float(level) * 100
                 if 5 <= percent_diff < 11:
-                    closest_levels_up[symbol].append(float(level) + standard_dev[symbol])
+                    closest_levels_up[symbol].append(float(level) + standard_dev[symbol][0])
             if float(level) < intraday_prices[symbol] and symbol[level] > 1:
-                percent_diff2 = (float(level) - standard_dev[symbol] - intraday_prices[symbol]) / float(level) * 100
+                percent_diff2 = (float(level) - standard_dev[symbol][1] - intraday_prices[symbol]) / float(level) * 100
                 if -9.9 <= percent_diff2 <= -5:
-                    closest_levels_down[symbol].append(float(level) - standard_dev[symbol])
+                    closest_levels_down[symbol].append(float(level) - standard_dev[symbol][1])
 
+    # plot local_extrema and local_extrema +- stdev, on top of bar_data_15min, later...
     print("// filtered uppers //", closest_levels_up) # REMOVE LATER
     print("// filtered lowers //", closest_levels_down) # REMOVE LATER
 
     for symbol in closest_levels_up:
-        upper = min(closest_levels_up[symbol], intraday_prices[symbol]*1.05) + standard_dev[symbol]
+        upper = min(closest_levels_up[symbol], intraday_prices[symbol]*1.05) + standard_dev[symbol][0]
         upper_rounded = float(Decimal(str(upper)).quantize(Decimal("0.01"), rounding=ROUND_UP)) if upper >= 1.00 else float(Decimal(str(upper)).quantize(Decimal("0.0001"), rounding=ROUND_UP))
         levels[symbol] = [upper_rounded]
     for symbol in closest_levels_down:
-        lower = max(closest_levels_down[symbol], upper_rounded*0.95) - standard_dev[symbol]
+        lower = max(closest_levels_down[symbol], upper_rounded*0.95) - standard_dev[symbol][1]
         lower_rounded = float(Decimal(str(lower)).quantize(Decimal("0.01"), rounding=ROUND_DOWN)) if lower >= 1.00 else float(Decimal(str(lower)).quantize(Decimal("0.0001"), rounding=ROUND_DOWN))
         levels[symbol].append(lower_rounded)
 
