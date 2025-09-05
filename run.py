@@ -1,5 +1,4 @@
 import pytz, datetime, time
-import asyncio
 
 from symbol_CLI import symbol_cli
 from parameter_writer import parameter_writer
