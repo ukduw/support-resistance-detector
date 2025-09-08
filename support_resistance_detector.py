@@ -114,17 +114,16 @@ def level_detector(symbols):
 
     # ===== SUPPORT/RESISTANCE DETECTION ===== #
     # price zones using below +- 1 stdev (daily, per bar...?)
-    # take bar_data df, append local_extrema_sd with?:
-        # 1. local extrema of sliding window
+    # take bar_data df, append local_extrema_sd with:
+        # local extrema of sliding window + strength score
             # local extrema over a sliding window of candlesticks
             # in other words, price points where price previously reversed
-        # 2. pivot points with strength score?
-            # count pivot candles at price points (+ bound%)
-            # can score levels by number of pivot candles
-            # pivot candle = higher/lower than previous/neighboring candles
-        # 3. reduce noise via fractals?
-            # essentially candle pattern: (green vs red) 1. ggg-rr, 2. rrr-gg
-            # 1. reversal on hitting resistance, 2. reversal on hitting support
+        # use scipy.signal's find_peaks? use highs, lows dicts
+        # make df for symbol in dict, 
+            # data = pd.DataFrame({ 'highs': [...], 'lows': [...] })
+            # find_peaks(data['highs']), find_peaks(-data['lows'])
+
+        # other methods: pivot points, moving averages, candlestick patterns, k-means clustering
     # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
 
 
