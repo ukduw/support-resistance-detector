@@ -123,6 +123,9 @@ def level_detector(symbols):
             # data = pd.DataFrame({ 'highs': [...], 'lows': [...] })
             # peaks, _ = find_peaks(data['highs']), valleys, _ = find_peaks(-data['lows'])
             # data['highs'].iloc[peaks].values, data['lows'].iloc[valleys].values
+        
+        # find_peaks likely ignores flat levels/peaks
+        # need custom logic to detect flat levels; adjusting width and prominence parameters likely insufficient
 
         # other methods: pivot points, moving averages, candlestick patterns, k-means clustering
     # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
