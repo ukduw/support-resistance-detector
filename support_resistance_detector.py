@@ -4,7 +4,11 @@ from alpaca.data.timeframe import TimeFrame
 
 import pytz, datetime
 import pandas as pd
+import numpy as np
 import statistics
+
+import mplfinance as mpf
+import matplotlib.pyplot as plt
 
 from decimal import Decimal, ROUND_UP, ROUND_DOWN
 
@@ -149,7 +153,7 @@ def level_detector(symbols):
 
     # local_extrema format:
         #{
-        # "symbol1": {"level1": strength (int), "level2": strength, ...},
+        # "symbol1": {"maxima1": strength (int), "minima2": strength, ...},
         # "symbol2": {...}
         #}
 
@@ -164,7 +168,22 @@ def level_detector(symbols):
                 if -9.9 <= percent_diff2 <= -5:
                     closest_levels_down[symbol].append(float(level) - standard_dev[symbol][1])
 
+
     # plot local_extrema and local_extrema +- stdev, on top of bar_data_15min, later...
+    for symbol in bar_data:
+        fig, axlist = mpf.plot(bar_data[symbol], type='candle', returnfig=True, style='charles', title=f"{symbol} with S/R zones", volume=True)
+        ax = axlist[0]
+
+        # ax.fill_between(bar_data[symbol].index, EACH MINIMA + LOWS_STDEV[SYMBOL], EACH MINIMA - LOWS_STDEV[SYMBOL], color='green', alpha=0.2)
+        # ax.fill_between(bar_data[symbol].index, EACH MAXIMA + HIGHS_STDEV[SYMBOL], EACH MAXIMA - LOWS_STDEV[SYMBOL], color='red', alpha=0.2)
+
+        # needs logic to background shade extended hours
+            # if timestamp < open or timestamp > close, fill_between()?
+        # ax.axvline() to separate days
+
+        plt.show()
+
+
     print("// filtered uppers //", closest_levels_up) # REMOVE LATER
     print("// filtered lowers //", closest_levels_down) # REMOVE LATER
 
