@@ -121,7 +121,8 @@ def level_detector(symbols):
         # use scipy.signal's find_peaks? use highs, lows dicts
         # make df for symbol in dict, 
             # data = pd.DataFrame({ 'highs': [...], 'lows': [...] })
-            # find_peaks(data['highs']), find_peaks(-data['lows'])
+            # peaks, _ = find_peaks(data['highs']), valleys, _ = find_peaks(-data['lows'])
+            # data['highs'].iloc[peaks].values, data['lows'].iloc[valleys].values
 
         # other methods: pivot points, moving averages, candlestick patterns, k-means clustering
     # CONSIDER ONLY APPENDING LEVELS THAT ARE WITHIN 10-15% OF THE INTRADAY
