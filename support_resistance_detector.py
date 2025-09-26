@@ -19,7 +19,7 @@ load_dotenv()
 API_KEY = os.getenv("API_KEY")
 SECRET_KEY = os.getenv("SECRET_KEY")
 
-eastern = pytz.timezone("US/Eastern")
+eastern = pytz.timezone("US/Eastern") # ALPACA USES UTC; REFACTOR
 
 historical_client = StockHistoricalDataClient(api_key=API_KEY, secret_key=SECRET_KEY)
 
