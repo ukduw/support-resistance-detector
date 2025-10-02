@@ -38,6 +38,18 @@ levels = {}
 output = {}
     # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
 
+# REFACTOR
+# no need to request multiple days, so no need to split into multiple lists as below
+    # update input dict below and in symbol_CLI
+    # can just be one list (easy input)
+# can use 5min over 15min; no need for aggregator?
+# stdev still needed
+# i think find_peaks() can be used, just need logic to remove duplicate/flat peaks
+    # strength levels not needed; simplify
+# think i can disregard using pyplot; too much effort to visualize now that i'll only be getting 1 day's worth of levels
+    # can just print/write levels to file and visualize on tradingview...
+# logic to determine final levels needs work...
+
 
 # symbols:      (example: symbol_list3 skipped; empty day)
     # {
