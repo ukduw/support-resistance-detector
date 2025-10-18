@@ -6,7 +6,7 @@ from support_resistance_detector import level_detector
 
 eastern = pytz.timezone("US/Eastern")
 now = datetime.datetime.now(eastern)
-aftermarket_end_incoming = now.replace(hour=19, minute=45, second=0, microsecond=0) # 19:45 EDT / 00:45 BST
+aftermarket_end_incoming = now.replace(hour=19, minute=45, second=0, microsecond=0) # 19:45 EST/EDT / 00:45 BST/BDT
 
 
 if __name__ == "main":
