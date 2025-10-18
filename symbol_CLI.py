@@ -1,6 +1,5 @@
 # input format:
-    # a, b, c ;  ; e, f ; g, h ;  ; i, j, k, l, m
-        # (no comma at end of lists, add extra space to denote empty list)
+    # a, b, c, d, e, f, g...
 
 def symbol_cli():
     default = 4000
