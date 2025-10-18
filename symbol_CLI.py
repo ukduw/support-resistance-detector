@@ -43,10 +43,7 @@ def symbol_cli():
 
 # output format:
     # {
-    # "symbol_list5": ['a', 'b', 'c'],
-    # "symbol_list3": ['e', 'f'],
-    # "symbol_list2": ['g', 'h'],
-    # "symbol_list0": ['i', 'j', 'k', 'l', 'm'],
+    # "tickers": ['A', 'B', 'C', 'D', ...],
     # "dollar_value": 4000.0
     # }
 
