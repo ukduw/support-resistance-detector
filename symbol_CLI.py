@@ -6,14 +6,10 @@ def symbol_cli():
     print("Input watchlist")
 
     while True:
-        user_entry = input(f"Paste symbol list (separate symbols by ',' and lookback days by ';'): ").upper()
+        user_entry = input(f"Paste symbol list (separate symbols by ','): ").upper()
         dollar_value = input(f"Position dollar value [{default}]: ")
 
-        symbol_dict = {
-            f"symbol_list{5 - i}": group.split(", ")
-            for i, group in enumerate (user_entry.split(" ; "))
-            if group.strip()
-        }
+        symbol_dict = {"tickers": user_entry.split(", ")}
 
         count = 0
         for key in symbol_dict:
