@@ -11,9 +11,7 @@ def symbol_cli():
 
         symbol_dict = {"tickers": user_entry.split(", ")}
 
-        count = 0
-        for key in symbol_dict:
-            count += len(symbol_dict[key])
+        count = len(symbol_dict.tickers)
 
         symbol_dict["dollar_value"] = float(dollar_value or default)
 
