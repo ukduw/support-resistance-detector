@@ -51,13 +51,9 @@ output = {}
 # logic to determine final levels needs work...
 
 
-# symbols:      (example: symbol_list3 skipped; empty day)
+# symbols:
     # {
-    # "symbol_list5": ["AAPL", "TSLA", ...], 
-    # "symbol_list4": ["ABC, BBBY, ..."],
-    # "symbol_list2": ["GME", "MEME"...],
-    # "symbol_list1": ["XYZ", ...],
-    # "symbol_list0": ["BABA", "GABA", "BAGA", "GAGA", ...],
+    # "tickers": ["AAPL", "TSLA", ...], 
     # "dollar_value": 4000.0
     # }
 
