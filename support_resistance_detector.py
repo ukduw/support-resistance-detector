@@ -57,8 +57,6 @@ output = {}
     # "dollar_value": 4000.0
     # }
 
-# NOTE: 5min bars = 3x the bar requests - intra + 5d = 1,101 bars PER SYMBOL
-    # symbol_list5 MAX 9 SYMBOLS
 
 def level_detector(symbols):
     # ===== REQUEST PER LOOKBACKDAY ===== #
