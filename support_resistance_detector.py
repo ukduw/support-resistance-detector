@@ -85,6 +85,8 @@ def level_detector(symbols):
 
         else:
             dollar_value = symbols[key]
+    # consider not using dataframes, and storing all bar data
+    # only highs and lows are actually used
 
 
     # ===== 15MIN BAR AGGREGATOR ===== #
