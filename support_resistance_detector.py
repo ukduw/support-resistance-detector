@@ -88,21 +88,20 @@ def level_detector(symbols):
 
 
     # ===== 15MIN BAR AGGREGATOR ===== #
-    for symbol in bar_data:
-        for i in range(0, len(bar_data), 3):
-            three_bar_window = bar_data[symbol][i:i+3]
+    #for symbol in bar_data:
+    #    for i in range(0, len(bar_data), 3):
+    #        three_bar_window = bar_data[symbol][i:i+3]
 
-            aggregated = {
-                "open": three_bar_window[0].open,
-                "high": max(bar.high for bar in three_bar_window),
-                "low": min(bar.low for bar in three_bar_window),
-                "close": three_bar_window[-1].close,
-                "volume": sum(bar.volume for bar in three_bar_window)
-            }
+    #        aggregated = {
+    #            "open": three_bar_window[0].open,
+    #            "high": max(bar.high for bar in three_bar_window),
+    #            "low": min(bar.low for bar in three_bar_window),
+    #            "close": three_bar_window[-1].close,
+    #            "volume": sum(bar.volume for bar in three_bar_window)
+    #        }
 
-            bar_data_15min[symbol].append(aggregated) # convert to df when needed
+    #        bar_data_15min[symbol].append(aggregated) # convert to df when needed
     # is an aggregator needed? more sensitive 5min-based levels may be better
-    # CONSIDER COMMENTING OUT
 
 
     # ===== HIGH/LOW STDEV ===== #
