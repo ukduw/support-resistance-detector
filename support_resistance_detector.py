@@ -25,9 +25,7 @@ historical_client = StockHistoricalDataClient(api_key=API_KEY, secret_key=SECRET
 
 
 # REFACTOR
-# no need to request multiple days, so no need to split into multiple lists as below
-    # update input dict below and in symbol_CLI
-    # can just be one list (easy input)
+# refactor for single tickers list
 # can use 5min over 15min; no need for aggregator?
 # stdev still needed
 # i think find_peaks() can be used, just need logic to remove duplicate/flat peaks
