@@ -55,7 +55,6 @@ def level_detector(symbols):
 
     levels = {}
     output = {}
-    # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
 
     # ===== REQUEST PER LOOKBACKDAY ===== #
     for key in symbols:
