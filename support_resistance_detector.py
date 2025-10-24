@@ -26,7 +26,6 @@ historical_client = StockHistoricalDataClient(api_key=API_KEY, secret_key=SECRET
 
 # REFACTOR
 # refactor for single tickers list
-# can use 5min over 15min; no need for aggregator?
 # stdev still needed
 # i think find_peaks() can be used, just need logic to remove duplicate/flat peaks
     # strength levels not needed; simplify
