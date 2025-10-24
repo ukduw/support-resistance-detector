@@ -24,20 +24,6 @@ eastern = pytz.timezone("US/Eastern") # ALPACA USES UTC; REFACTOR
 historical_client = StockHistoricalDataClient(api_key=API_KEY, secret_key=SECRET_KEY)
 
 
-bar_data = {}
-intraday_prices = {}
-
-bar_data_15min = {}
-standard_dev = {}
-local_extrema = {}
-
-closest_levels_up = {}
-closest_levels_down = {}
-
-levels = {}
-output = {}
-    # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
-
 # REFACTOR
 # no need to request multiple days, so no need to split into multiple lists as below
     # update input dict below and in symbol_CLI
@@ -59,6 +45,20 @@ output = {}
 
 
 def level_detector(symbols):
+    bar_data = {}
+    intraday_prices = {}
+
+    bar_data_15min = {}
+    standard_dev = {}
+    local_extrema = {}
+
+    closest_levels_up = {}
+    closest_levels_down = {}
+
+    levels = {}
+    output = {}
+    # level strength score could be used for: 1. take-profit logic, 2. risk-off, 3. planning bigger plays
+
     # ===== REQUEST PER LOOKBACKDAY ===== #
     for key in symbols:
         if key[-1].isdigit():
